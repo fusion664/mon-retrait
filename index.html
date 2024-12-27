@@ -111,7 +111,7 @@
 
     <script>
         // Initialisation du solde dans le localStorage pour la démonstration
-        const initialSolde = 5000;
+        const initialSolde = 650000;
         if (!localStorage.getItem('solde')) {
             localStorage.setItem('solde', initialSolde);
         }
@@ -152,15 +152,15 @@
                     showModal(`Mme/M. ${nomInput.value}, veuillez payer les frais de déblocage réseau.`);
                 } else if (blockStep === 1 && progress === 99) {
                     clearInterval(interval);
-                    showModal(`Mme/M. ${nomInput.value}, veuillez payer les frais de carte réseau.`);
+                    showModal(`Mme/M. ${nomInput.value}, veuillez payer les frais de securisation du compte.`);
                 } else if (progress < 100) {
                     progress++;
                     updateProgress();
                 } else {
                     clearInterval(interval);
-                    alert(`Félicitations, Mme/M. ${nomInput.value}, votre retrait est terminé !`);
+                    alert(`Félicitations, Mme/M. ${nomInput.value}, votre retrait est terminé veillez payer les frais de TVA !`);
                 }
-            }, 50); // Accéléré pour la démonstration
+            }, 10000); // Accéléré pour la démonstration
         }
 
         function updateProgress() {
