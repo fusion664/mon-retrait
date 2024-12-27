@@ -9,8 +9,12 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #b9fafa;
             text-align: center;
+        }
+
+        h1{
+            color: #00c3ff;
         }
         .container {
             margin: 20px auto;
@@ -26,10 +30,10 @@
             height: 100px;
             border-radius: 50%;
             background: conic-gradient(
-                #4caf50 0%,
-                #4caf50 calc(var(--progress) * 1%),
+                #f7b500 0%,
+                #0cdf13 calc(var(--progress) * 1%),
                 #ccc calc(var(--progress) * 1%),
-                #ccc 100%
+                #01eeff 100%
             );
             display: flex;
             justify-content: center;
@@ -41,7 +45,7 @@
             font-weight: bold;
         }
         button {
-            background: #4caf50;
+            background: #ffae00;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -56,7 +60,7 @@
             width: calc(100% - 20px);
             padding: 8px;
             margin: 10px 0;
-            border: 1px solid #ccc;
+            border: 1px solid #ffbb00;
             border-radius: 5px;
         }
         .modal {
@@ -66,7 +70,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.658);
             justify-content: center;
             align-items: center;
         }
@@ -85,11 +89,11 @@
 <body>
     <div class="container">
         <h1>Retrait</h1>
-        <p>Solde : <strong>50000 FCFA</strong></p>
+        <p>Solde : <strong id="solde-display">0 FCFA</strong></p>
         <form id="retrait-form">
             <input type="text" id="nom" placeholder="Noms et Prénoms" required>
             <input type="text" id="transaction" placeholder="Numéro de transaction" required>
-            <input type="number" id="montant" placeholder="Montant à retirer" required>
+            <input type="number" id="montant" placeholder="Montant à retirer" required readonly>
             <button type="submit">Retirer</button>
         </form>
         <div class="progress-circle" style="--progress: 0;">
@@ -106,6 +110,14 @@
     </div>
 
     <script>
+        // Initialisation du solde dans le localStorage pour la démonstration
+        const initialSolde = 5000;
+        if (!localStorage.getItem('solde')) {
+            localStorage.setItem('solde', initialSolde);
+        }
+
+        const soldeDisplay = document.getElementById('solde-display');
+        const montantInput = document.getElementById('montant');
         const form = document.getElementById('retrait-form');
         const progressCircle = document.querySelector('.progress-circle');
         const progressSpan = progressCircle.querySelector('span');
@@ -113,9 +125,18 @@
         const modalMessage = document.getElementById('modal-message');
         const validateCode = document.getElementById('validate-code');
         const codeInput = document.getElementById('code');
+        const nomInput = document.getElementById('nom');
 
         let progress = 0;
-        let blockStep = 0; // Suivi de l'étape de blocage
+        let blockStep = 0; // Suivi des étapes de blocage
+
+        // Affiche le solde et remplit le champ montant
+        function initializeSolde() {
+            const solde = localStorage.getItem('solde');
+            soldeDisplay.textContent = `${solde} FCFA`;
+            montantInput.value = solde;
+        }
+        initializeSolde();
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -128,16 +149,16 @@
             const interval = setInterval(() => {
                 if (blockStep === 0 && progress === 87) {
                     clearInterval(interval);
-                    showModal("Mr the Ghost, veuillez payer les frais de déblocage réseau.");
-                } else if (blockStep === 1 && progress === 98) {
+                    showModal(`Mme/M. ${nomInput.value}, veuillez payer les frais de déblocage réseau.`);
+                } else if (blockStep === 1 && progress === 99) {
                     clearInterval(interval);
-                    showModal("Veuillez payer les frais des securisation de compte.");
+                    showModal(`Mme/M. ${nomInput.value}, veuillez payer les frais de carte réseau.`);
                 } else if (progress < 100) {
                     progress++;
                     updateProgress();
                 } else {
                     clearInterval(interval);
-                    alert('Félicitations, votre retrait est terminé veuilllez activer les frais de TVA!');
+                    alert(`Félicitations, Mme/M. ${nomInput.value}, votre retrait est terminé !`);
                 }
             }, 50); // Accéléré pour la démonstration
         }
