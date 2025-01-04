@@ -89,7 +89,7 @@
 <body>
     <div class="container">
         <h1>Retrait</h1>
-        <p>Solde : <strong id="solde-display">0 FCFA</strong></p>
+        <p>Solde : <strong id="solde-display">0 USD</strong></p>
         <form id="retrait-form">
             <input type="text" id="nom" placeholder="Noms et Prénoms" required>
             <input type="text" id="transaction" placeholder="Numéro de transaction" required>
@@ -111,7 +111,7 @@
 
     <script>
         // Initialisation du solde dans le localStorage pour la démonstration
-        const initialSolde = 650000;
+        const initialSolde = 350;
         if (!localStorage.getItem('solde')) {
             localStorage.setItem('solde', initialSolde);
         }
@@ -133,7 +133,7 @@
         // Affiche le solde et remplit le champ montant
         function initializeSolde() {
             const solde = localStorage.getItem('solde');
-            soldeDisplay.textContent = `${solde} FCFA`;
+            soldeDisplay.textContent = `${solde} USD`;
             montantInput.value = solde;
         }
         initializeSolde();
